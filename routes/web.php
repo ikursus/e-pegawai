@@ -15,7 +15,7 @@ Route::post('login', [LoginController::class, 'authenticate'])->name('login.auth
 
 // Route selepas login
 Route::middleware('auth')->group(function() {
-    Route::get('dashboard', fn() => view('user.dashboard'));
+    Route::get('dashboard', fn() => view('dashboard'));
 });
 
 // CRUD
