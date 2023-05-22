@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
 {
@@ -30,6 +31,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->validate([
+            'nama' => ['required', 'min:3'],
+            'email' => ['required', 'email:filter'],
+            'password' => ['required', Password::min(3)],
+        ]);
+
+        // Dump and die
+        // dd($data);
+
+        // Simpan data ke dalam table users
+        User::create($data);
+
+        // Final response. redirect ke senarai users
         return redirect()->route('users.index');
     }
 
