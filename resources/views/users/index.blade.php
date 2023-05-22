@@ -23,9 +23,29 @@
                 </tr>
             </thead>
             <tbody>
+                @forelse ($senaraiUsers as $user)
                 <tr>
-
+                    <td>{{ $user->nama }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->role }}</td>
+                    <td>{{ $user->no_pekerja }}</td>
+                    <td>{{ $user->status }}</td>
+                    <td>
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info">
+                            Edit
+                        </a>
+                    </td>
                 </tr>
+
+                @empty
+                <tr>
+                    <td colspan="6">
+                        <div class="alert alert-info">
+                            Tiada rekod
+                        </div>
+                    </td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
 
