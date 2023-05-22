@@ -11,6 +11,8 @@
     <div class="container">
         <h1>Daftar User Baru</h1>
 
+        @include('layouts.alerts')
+
         <form method="POST" action="{{ route('users.store') }}">
             @csrf
 

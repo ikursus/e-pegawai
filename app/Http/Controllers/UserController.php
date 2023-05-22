@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Mail\NotisAkaunBaru;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
@@ -41,7 +43,10 @@ class UserController extends Controller
         // dd($data);
 
         // Simpan data ke dalam table users
-        User::create($data);
+        $user = User::create($data);
+
+        // Hantar email notis akaun baru kepada user baru tersebut
+        Mail::to($request->user())->send(new NotisAkaunBaru($user));
 
         // Final response. redirect ke senarai users
         return redirect()->route('users.index');
