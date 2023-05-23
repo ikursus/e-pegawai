@@ -1,17 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <p>Tahniah, akaun anda telah berjaya dicipta.</p>
-    <p>Sila login ke akaun anda menggunakan email: {{ $user->email }}
-        dan password yang telah anda tetapkan.
-    </p>
-    <p>Sekian, terima kasih.</p>
-    <p>{{ config('app.name') }}</p>
-</body>
-</html>
+<x-mail::message>
+
+Tahniah, akaun anda telah berjaya dicipta.
+Sila login ke akaun anda menggunakan email: {{ $user->email }}
+    dan password yang telah anda tetapkan.
+
+<x-mail::button :url="'http://e-pegawai.test'">
+Login di sini
+</x-mail::button>
+
+- Item 1
+- Item 2
+- Item 3
+
+<x-mail::table>
+| Nama       | Email     |
+| ---------- |---------|
+| {{ $user->nama }}  | {{ $user->email }}|
+
+</x-mail::table>
+
+Sekian, terima kasih.
+{{ config('app.name') }}
+
+
+</x-mail::message>

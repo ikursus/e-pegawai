@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Mail\NotisAkaunBaru;
+use App\Notifications\NotisAkaunBaru as NotificationsNotisAkaunBaru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
@@ -47,6 +48,9 @@ class UserController extends Controller
 
         // Hantar email notis akaun baru kepada user baru tersebut
         Mail::to($request->user())->send(new NotisAkaunBaru($user));
+
+        // Hantar notification kepada user baru tersebut
+        $user->notify(new NotificationsNotisAkaunBaru($user));
 
         // Final response. redirect ke senarai users
         return redirect()->route('users.index');

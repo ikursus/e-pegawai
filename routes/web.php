@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\LoginController;
 
 // Route pelawat
 Route::get('/', function () {
@@ -15,7 +16,7 @@ Route::post('login', [LoginController::class, 'authenticate'])->name('login.auth
 
 // Route selepas login
 Route::middleware('auth')->group(function() {
-    Route::get('dashboard', fn() => view('dashboard'));
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
 });
 
 // CRUD
