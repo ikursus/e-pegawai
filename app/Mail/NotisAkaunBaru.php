@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NotisAkaunBaru extends Mailable
+class NotisAkaunBaru extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 

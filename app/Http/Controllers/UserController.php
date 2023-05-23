@@ -18,7 +18,18 @@ class UserController extends Controller
     {
         $senaraiUsers = User::all();
 
-        return view('users.index', compact('senaraiUsers'));
+        if (session('type') && session('message'))
+        {
+            $type = session('type');
+            $message = session('message');
+        }
+        else
+        {
+            $type = 'primary';
+            $message = 'Sila tambah user baru';
+        }
+
+        return view('users.index', compact('senaraiUsers', 'type', 'message'));
     }
 
     /**
@@ -53,7 +64,9 @@ class UserController extends Controller
         $user->notify(new NotificationsNotisAkaunBaru($user));
 
         // Final response. redirect ke senarai users
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')
+        ->with('type', 'success')
+        ->with('message', 'Rekod Berjaya Ditambah!');
     }
 
     /**

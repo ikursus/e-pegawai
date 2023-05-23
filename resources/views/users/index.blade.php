@@ -11,6 +11,10 @@
     <div class="container">
         <h1>Senarai Users</h1>
 
+        <x-alert :type="$type" :message="$message" />
+
+        <hr>
+
         <a href="{{ route('users.create') }}" class="btn btn-primary">Tambah User</a>
 
         <table class="table table-bordered">

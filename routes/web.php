@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
@@ -30,3 +31,8 @@ Route::middleware('auth')->group(function() {
 
 // Route::resource('users', UserController::class)->only(['create', 'store', 'show']);
 Route::resource('users', UserController::class);
+
+Route::get('run-job', function () {
+    Artisan::call('queue:work', ['--stop-when-empty' => true]);
+    return nl2br(Artisan::output());
+});
