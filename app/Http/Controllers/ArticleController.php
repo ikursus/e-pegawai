@@ -60,6 +60,12 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
+        // if (auth()->id() != $article->user_id)
+        // {
+        //     abort(401);
+        // }
+        $this->authorize('view', $article);
+
         return view('articles.edit', compact('article'));
     }
 

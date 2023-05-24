@@ -12,13 +12,17 @@
 <table class="table table-bordered">
     <colgroup>
         <col class="col-1">
-        <col class="col-7">
+        <col class="col-1">
+        <col class="col-1">
+        <col class="col-5">
         <col class="col-2">
         <col class="col-2">
     </colgroup>
     <thead>
         <tr>
-            <th>#</th>
+            <th>BIL</th>
+            <th>ARTIKEL ID</th>
+            <th>USER ID</th>
             <th>TAJUK</th>
             <th>STATUS</th>
             <th>TINDAKAN</th>
@@ -28,6 +32,8 @@
         @forelse ($senaraiArticles as $article)
         <tr>
             <td>{{ $loop->iteration }}</td>
+            <td>{{ $article->id }}</td>
+            <td>{{ $article->user_id }}</td>
             <td>{{ $article->tajuk }}</td>
             <td>{{ $article->status }}</td>
             <td>
@@ -55,4 +61,6 @@
         @endforelse
     </tbody>
 </table>
+
+{{ $senaraiArticles->links() }}
 @endsection
