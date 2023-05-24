@@ -92,6 +92,11 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
+        if (auth()->user()->role == User::ROLE_ADMIN)
+        {
+            return true;
+        }
 
+        return false;
     }
 }

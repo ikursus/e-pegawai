@@ -16,7 +16,7 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->role != User::ROLE_ADMIN)
+        if (!$request->user()->isAdmin())
         {
             return redirect()->route('dashboard')
             ->with('type', 'danger')
