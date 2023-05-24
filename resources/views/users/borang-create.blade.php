@@ -28,6 +28,27 @@
                 <input type="email" class="form-control" name="email" placeholder="Email Pengguna">
             </div>
 
+            <div class="mb-3">
+                <select class="form-control" name="role">
+                    <option>-- Sila Pilih Role --</option>
+
+                    @foreach (\App\Models\User::senaraiRole() as $key => $value)
+                    <option value="{{ $key }}">{{ $value }}</option>
+                    @endforeach
+
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <select class="form-control" name="status">
+                    <option>-- Sila Pilih Status --</option>
+
+                    @foreach (\App\Models\User::senaraiStatus() as $key => $value)
+                    <option value="{{ $key }}">{{ $value }}</option>
+                    @endforeach
+                </select>
+            </div>
+
 
             <button type="submit" class="btn btn-primary">Submit</button>
 

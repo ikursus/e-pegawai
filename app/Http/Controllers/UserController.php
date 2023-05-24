@@ -49,6 +49,8 @@ class UserController extends Controller
             'nama' => ['required', 'min:3'],
             'email' => ['required', 'email:filter'],
             'password' => ['required', Password::min(3)],
+            'role' => ['required', 'in:' . User::ruleRole()],
+            'status' => ['required', 'in:' . User::ruleStatus()]
         ]);
 
         // Dump and die
