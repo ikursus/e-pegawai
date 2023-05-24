@@ -18,6 +18,10 @@ Route::post('login', [LoginController::class, 'authenticate'])->name('login.auth
 // Route selepas login
 Route::middleware('auth')->group(function() {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
+
+
+    Route::resource('users', UserController::class)->middleware('check.admin');
+
 });
 
 // CRUD
@@ -30,7 +34,7 @@ Route::middleware('auth')->group(function() {
 // Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
 // Route::resource('users', UserController::class)->only(['create', 'store', 'show']);
-Route::resource('users', UserController::class);
+
 
 Route::get('run-job', function () {
     Artisan::call('queue:work', ['--stop-when-empty' => true]);

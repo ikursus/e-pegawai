@@ -22,8 +22,17 @@ class DashboardController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $message = 'Selamat Datang ' . auth()->user()->nama;
+        if (session('type') && session('message'))
+        {
+            $type = session('type');
+            $message = session('message');
+        }
+        else
+        {
+            $type = 'primary';
+            $message = 'Selamat Datang ' . auth()->user()->nama;
+        }
 
-        return view('dashboard', compact('message'));
+        return view('dashboard', compact('type', 'message'));
     }
 }

@@ -11,7 +11,7 @@
     <div class="container">
         <h1>Dashboard</h1>
 
-        @include('components.card', [
+        {{-- @include('components.card', [
             'title' => 'Tajuk Component Card Include',
             'slot' => 'Kontent Component Card Include'
         ])
@@ -30,11 +30,17 @@
 
         <x-card title="Tajuk Component X-">
             Konten Component Card menerusi X-
-        </x-card>
+        </x-card> --}}
+
+        {{-- <hr> --}}
+
+        <x-alert :type="$type" :message="$message" />
 
         <hr>
 
-        <x-alert type="primary" :message="$message" />
+        <a href="{{ route('users.index') }}" class="btn btn-primary">
+            Urus Pengguna Sistem
+        </a>
 
         <p>
             Ada
@@ -43,6 +49,8 @@
             </span>
             notifikasi belum dibaca.
         </p>
+
+        <hr>
 
         <table class="table table-bordered">
             <thead>

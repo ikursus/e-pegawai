@@ -89,4 +89,9 @@ class User extends Authenticatable
 
         return $roles; // admin,user
     }
+
+    public function isAdmin()
+    {
+
+    }
 }
