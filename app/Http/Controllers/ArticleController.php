@@ -37,6 +37,7 @@ class ArticleController extends Controller
     public function store(ArticleRequest $request)
     {
         $data = $request->validated();
+
         $data['user_id'] = auth()->id();
 
         Article::create($data);
