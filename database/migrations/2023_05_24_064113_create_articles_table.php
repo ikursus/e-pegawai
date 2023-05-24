@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('tajuk');
+            $table->text('kandungan');
+            $table->string('status')->default('draft');
             $table->timestamps();
         });
     }

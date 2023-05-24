@@ -13,7 +13,7 @@
 <a class="nav-link" href="{{ route('users.index') }}">Pengurusan Pengguna</a>
 </li>
 <li class="nav-item">
-<a class="nav-link">Artikel</a>
+<a class="nav-link" href="{{ route('articles.index') }}">Artikel</a>
 </li>
 </ul>
 <form class="d-flex" role="search">
