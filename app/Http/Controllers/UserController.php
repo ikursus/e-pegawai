@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Mail\NotisAkaunBaru;
-use App\Notifications\NotisAkaunBaru as NotificationsNotisAkaunBaru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
+use App\Notifications\NotisAkaunBaru as NotificationsNotisAkaunBaru;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -49,13 +50,29 @@ class UserController extends Controller
     {
         $this->authorize('create');
 
-        $data = $request->validate([
+        $request->validate([
             'nama' => ['required', 'min:3'],
             'email' => ['required', 'email:filter'],
             'password' => ['required', Password::min(3)],
             'role' => ['required', 'in:' . User::ruleRole()],
-            'status' => ['required', 'in:' . User::ruleStatus()]
+            'status' => ['required', 'in:' . User::ruleStatus()],
+            'gambar' => ['nullable', 'sometimes', 'mimes:png,jpg']
         ]);
+        // Dapatkan semua data KECUALI gambar
+        $data = $request->except('gambar');
+
+        // Semak jika ada file di upload
+        if ($request->hasFile('gambar'))
+        {
+            // Dapatkan file
+            $file = $request->file('gambar');
+
+            // Simpan file dalam folder public_uploaded dan dapatkan nama baru
+            $fileName = $file->store('profile', 'public_uploaded');
+
+            // Attachkan nama gambar pada $data untuk disimpan di dalam table users
+            $data['gambar'] = $fileName;
+        }
 
         // Dump and die
         // dd($data);
@@ -105,22 +122,40 @@ class UserController extends Controller
         $request->validate([
             'nama' => ['required', 'min:3'],
             'email' => ['required', 'email:filter'],
+            'password' => ['nullable', 'sometimes', Password::min(3)],
             'role' => ['required', 'in:' . User::ruleRole()],
-            'status' => ['required', 'in:' . User::ruleStatus()]
+            'status' => ['required', 'in:' . User::ruleStatus()],
+            'gambar' => ['nullable', 'sometimes', 'mimes:png,jpg']
         ]);
 
-        // Dapatkan semua data kecuali password
-        $data = $request->except('password');
+        // Dapatkan semua data kecuali password dan gambar
+        $data = $request->except(['password', 'gambar']);
 
         // Semak jika ada password untuk diubah
         if ($request->has('password') && $request->filled('password'))
         {
-            $request->validate([
-                'password' => ['required', Password::min(3)],
-            ]);
-
             // Attachkan password ke $data supaya dikemaskini ke dalam table user
             $data['password'] = $request->input('password');
+        }
+
+        // Semak jika ada file di upload
+        if ($request->hasFile('gambar'))
+        {
+            // Dapatkan file
+            $file = $request->file('gambar');
+
+            // Semak jika ada file lama dalam direktori upload.
+            // Jika ada, delete terlebih dahulu
+            if (!is_null($user->gambar) && Storage::disk('public_uploaded')->exists($user->gambar))
+            {
+                Storage::disk('public_uploaded')->delete($user->gambar);
+            }
+
+            // Simpan file dalam folder public_uploaded dan dapatkan nama baru
+            $fileName = $file->store('profile', 'public_uploaded');
+
+            // Attachkan nama gambar pada $data untuk disimpan di dalam table users
+            $data['gambar'] = $fileName;
         }
 
         $user->update($data);

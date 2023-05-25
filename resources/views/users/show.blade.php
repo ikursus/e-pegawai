@@ -26,6 +26,16 @@
 
                 <tbody>
                     <tr>
+                        <td>GAMBAR</td>
+                        <td>
+                            @if (!is_null($user->gambar))
+                            <img src="{{ asset('uploaded/' . $user->gambar) }}" width="100px" class="img-thumbnail rounded float-start" />
+                            @else
+                            TIADA GAMBAR
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
                         <td>NAMA</td>
                         <td>{{ $user->nama }}</td>
                     </tr>

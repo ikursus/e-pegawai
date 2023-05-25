@@ -3,7 +3,7 @@
 @section('content')
 <h1>Kemaskini Profile</h1>
 
-<form method="POST" action="{{ route('users.update', $user->id) }}">
+<form method="POST" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
 

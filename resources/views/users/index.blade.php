@@ -14,6 +14,7 @@
 <table class="table table-bordered">
     <thead>
         <tr>
+            <th>GAMBAR</th>
             <th>NAMA</th>
             <th>EMAIL</th>
             <th>ROLE</th>
@@ -25,6 +26,14 @@
     <tbody>
         @forelse ($senaraiUsers as $user)
         <tr>
+            <td>
+                @if (!is_null($user->gambar))
+                <img src="{{ asset('uploaded/' . $user->gambar) }}" width="100px" class="img-thumbnail rounded float-start" />
+                @else
+                TIADA GAMBAR
+                @endif
+
+            </td>
             <td>{{ $user->nama }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->role }}</td>
