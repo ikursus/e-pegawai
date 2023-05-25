@@ -37,6 +37,9 @@
             <td>{{ $article->tajuk }}</td>
             <td>{{ $article->status }}</td>
             <td>
+                <a href="{{ route('articles.show', $article->id) }}" class="btn btn-primary">
+                    View
+                </a>
                 <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-info">
                     Edit
                 </a>

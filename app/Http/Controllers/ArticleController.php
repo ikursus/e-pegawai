@@ -14,11 +14,10 @@ class ArticleController extends Controller
     public function index()
     {
         // Keluarkan data dari table artikel berdasarkan id user yang sedang login
-        $senaraiArticles = Article::where('user_id', auth()->id())
-        ->paginate(10);
+        $senaraiArticles = Article::paginate(10);
 
         $type = session('type') ?? 'primary';
-        $message = session('message') ?? 'Sila tambah artikel';
+        $message = session('message') ?? 'Sila pilih artikel untuk lihat';
 
         return view('articles.index', compact('senaraiArticles', 'type', 'message'));
     }
@@ -64,7 +63,7 @@ class ArticleController extends Controller
         // {
         //     abort(401);
         // }
-        $this->authorize('view', $article);
+        $this->authorize('update', $article);
 
         return view('articles.edit', compact('article'));
     }
@@ -74,6 +73,8 @@ class ArticleController extends Controller
      */
     public function update(ArticleRequest $request, Article $article)
     {
+        $this->authorize('update', $article);
+
         $article->update($request->all());
 
         return redirect()->route('articles.index')
@@ -86,6 +87,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        $this->authorize('delete', $article);
+
         $article->delete();
 
         return redirect()->route('articles.index')
