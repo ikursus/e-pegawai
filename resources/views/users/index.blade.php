@@ -1,7 +1,7 @@
 @extends('layouts.induk')
 
 @section('content')
-<h1>Senarai Users</h1>
+<h1>Direktori Pengguna</h1>
 
 <x-alert :type="$type" :message="$message" />
 

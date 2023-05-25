@@ -80,7 +80,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $this->authorize('view', $user);
+        // $this->authorize('view', $user);
 
         return view('users.show', compact('user'));
     }
@@ -102,19 +102,24 @@ class UserController extends Controller
     {
         $this->authorize('update', $user);
 
-        $data = $request->validate([
+        $request->validate([
             'nama' => ['required', 'min:3'],
             'email' => ['required', 'email:filter'],
             'role' => ['required', 'in:' . User::ruleRole()],
             'status' => ['required', 'in:' . User::ruleStatus()]
         ]);
 
+        // Dapatkan semua data kecuali password
+        $data = $request->except('password');
+
+        // Semak jika ada password untuk diubah
         if ($request->has('password') && $request->filled('password'))
         {
             $request->validate([
                 'password' => ['required', Password::min(3)],
             ]);
 
+            // Attachkan password ke $data supaya dikemaskini ke dalam table user
             $data['password'] = $request->input('password');
         }
 

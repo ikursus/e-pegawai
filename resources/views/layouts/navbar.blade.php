@@ -16,10 +16,10 @@
 <a class="nav-link" href="{{ route('articles.index') }}">Artikel</a>
 </li>
 </ul>
-<form class="d-flex" role="search">
+{{-- <form class="d-flex" role="search">
 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 <button class="btn btn-outline-success" type="submit">Search</button>
-</form>
+</form> --}}
 <a class="btn btn-outline-danger ms-2" href="/logout">Logout {{ auth()->user()->nama }}</a>
 </div>
 </div>

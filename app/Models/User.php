@@ -23,6 +23,13 @@ class User extends Authenticatable
         'nama',
         'email',
         'password',
+        'no_pekerja',
+        'telefon',
+        'jawatan',
+        'alamat',
+        'bahagian',
+        'jabatan',
+        'gambar',
         'role',
         'status'
     ];
