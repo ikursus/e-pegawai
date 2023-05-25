@@ -3,11 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TokenController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserTrashController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ArticleTrashController;
+use App\Http\Controllers\PhotoController;
 
 // Route pelawat
 Route::get('/', function () {
@@ -36,10 +38,16 @@ Route::middleware('auth')->group(function() {
 
     Route::resource('users', UserController::class);
 
+    // Route untuk access token API
+    Route::get('tokens', [TokenController::class, 'index'])->name('tokens.index');
+    Route::post('tokens', [TokenController::class, 'store'])->name('tokens.store');
+    Route::delete('tokens/{id}', [TokenController::class, 'destroy'])->name('tokens.destroy');
+
     // Bahagian Logout
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-
+    // Route demo dapatkan photo dari API https://jsonplaceholder.typicode.com/
+    Route::get('photos', [PhotoController::class, 'index'])->name('photos.index');
 
 });
 

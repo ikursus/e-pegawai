@@ -7,20 +7,23 @@
 <div class="collapse navbar-collapse" id="navbarCollapse">
 <ul class="navbar-nav me-auto mb-2 mb-md-0">
 <li class="nav-item">
-<a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Home</a>
+    <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Home</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="{{ route('users.index') }}">Direktori Pengguna</a>
+    <a class="nav-link" href="{{ route('users.index') }}">Direktori Pengguna</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="{{ route('articles.index') }}">Artikel</a>
+    <a class="nav-link" href="{{ route('articles.index') }}">Artikel</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('tokens.index') }}">Access Token</a>
 </li>
 </ul>
 {{-- <form class="d-flex" role="search">
 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 <button class="btn btn-outline-success" type="submit">Search</button>
 </form> --}}
-<a class="btn btn-outline-danger ms-2" href="/logout">Logout {{ auth()->user()->nama }}</a>
+    <a class="btn btn-outline-danger ms-2" href="/logout">Logout {{ auth()->user()->nama }}</a>
 </div>
 </div>
 </nav>
