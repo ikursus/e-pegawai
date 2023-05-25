@@ -53,7 +53,7 @@ class ArticlePolicy
      */
     public function restore(User $user, Article $article): bool
     {
-        return $user->id === $article->user_id;
+        return $user->role == User::ROLE_ADMIN;
     }
 
     /**
@@ -61,6 +61,6 @@ class ArticlePolicy
      */
     public function forceDelete(User $user, Article $article): bool
     {
-        return $user->id === $article->user_id;
+        return $user->role == User::ROLE_ADMIN;
     }
 }

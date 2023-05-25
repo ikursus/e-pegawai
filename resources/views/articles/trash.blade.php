@@ -1,12 +1,11 @@
 @extends('layouts.induk')
 
 @section('content')
-<h1>Senarai Articles</h1>
+<h1>Senarai Articles Yang Dihapuskan</h1>
 
 <x-alert :type="$type" :message="$message" />
 
-<a href="{{ route('articles.create') }}" class="btn btn-primary mt-2 me-2">Tambah Artikel</a>
-<a href="{{ route('trash.articles.index') }}" class="btn btn-warning mt-2">Tong Sampah</a>
+<a href="{{ route('articles.index') }}" class="btn btn-primary mt-2 me-2">Senarai Artikel</a>
 
 <hr>
 
@@ -38,22 +37,23 @@
             <td>{{ $article->tajuk }}</td>
             <td>{{ $article->status }}</td>
             <td>
-                <a href="{{ route('articles.show', $article->id) }}" class="btn btn-primary">
-                    View
-                </a>
 
-                @can('update', $article)
-                    <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-info">
-                        Edit
-                    </a>
+                @can('restore', $article)
+                <form method="POST" action="{{ route('trash.articles.update', $article->id) }}">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="btn btn-success">
+                        Restore
+                    </button>
+                </form>
                 @endcan
 
-                @can('delete', $article)
-                    <form method="POST" action="{{ route('articles.destroy', $article->id) }}">
+                @can('forceDelete', $article)
+                    <form method="POST" action="{{ route('trash.articles.destroy', $article->id) }}">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">
-                            Delete
+                            Permanent Delete
                         </button>
                     </form>
                 @endcan

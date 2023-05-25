@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserTrashController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ArticleTrashController;
 
 // Route pelawat
 Route::get('/', function () {
@@ -19,17 +21,24 @@ Route::post('login', [LoginController::class, 'authenticate'])->name('login.auth
 // Route selepas login
 Route::middleware('auth')->group(function() {
 
-    // Bahagian User
+    // Bahagian Dashboard
     Route::get('dashboard', DashboardController::class)->name('dashboard');
 
+    // Bahagian Articles
     Route::resource('articles', ArticleController::class);
 
+    Route::get('trash/articles', [ArticleTrashController::class, 'index'])->name('trash.articles.index');
+    Route::patch('trash/articles/{id}', [ArticleTrashController::class, 'update'])->name('trash.articles.update');
+    Route::delete('trash/articles/{id}', [ArticleTrashController::class, 'destroy'])->name('trash.articles.destroy');
+
+    // Bahagian direktori Pengguna
+    // Route::resource('users', UserController::class)->middleware('check.admin');
+
+    Route::resource('users', UserController::class);
+
+    // Bahagian Logout
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-
-    // Bahagian pengurusan / admin
-    // Route::resource('users', UserController::class)->middleware('check.admin');
-    Route::resource('users', UserController::class);
 
 
 });
