@@ -111,10 +111,10 @@ class User extends Authenticatable
     }
 
     // Mutator auto encrypt password
-    protected function password(): Attribute
-    {
-        return Attribute::make(
-            set: fn(string $value) => bcrypt($value),
-        );
-    }
+    // protected function password(): Attribute
+    // {
+    //     return Attribute::make(
+    //         set: fn(string $value) => bcrypt($value),
+    //     );
+    // }
 }
