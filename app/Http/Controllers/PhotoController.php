@@ -10,6 +10,8 @@ class PhotoController extends Controller
     public function index()
     {
         $response = Http::get('http://jsonplaceholder.typicode.com/photos');
+        // Jika ada token perlu dibekalkan
+        // $response = Http::withToken('NOMBOR_TOKEN_DISINI')->get('http://jsonplaceholder.typicode.com/photos');
 
         if ($response->ok())
         {
