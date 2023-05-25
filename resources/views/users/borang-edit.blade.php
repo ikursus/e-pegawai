@@ -1,10 +1,11 @@
 @extends('layouts.induk')
 
 @section('content')
-<h1>Daftar Pengguna Baru</h1>
+<h1>Kemaskini Profile</h1>
 
-<form method="POST" action="{{ route('users.store') }}">
+<form method="POST" action="{{ route('users.update', $user->id) }}">
     @csrf
+    @method('PATCH')
 
     @include('users.form')
 

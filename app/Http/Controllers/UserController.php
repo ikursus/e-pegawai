@@ -26,7 +26,7 @@ class UserController extends Controller
         else
         {
             $type = 'primary';
-            $message = 'Sila tambah user baru';
+            $message = 'Sila pilih profile pengguna';
         }
 
         return view('users.index', compact('senaraiUsers', 'type', 'message'));
@@ -37,6 +37,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('create');
+
         return view('users.borang-create');
     }
 
@@ -45,6 +47,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create');
+
         $data = $request->validate([
             'nama' => ['required', 'min:3'],
             'email' => ['required', 'email:filter'],
@@ -74,9 +78,11 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
+        $this->authorize('view', $user);
+
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -84,6 +90,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
+
         return view('users.borang-edit', compact('user'));
     }
 
@@ -92,7 +100,29 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        return redirect()->back();
+        $this->authorize('update', $user);
+
+        $data = $request->validate([
+            'nama' => ['required', 'min:3'],
+            'email' => ['required', 'email:filter'],
+            'role' => ['required', 'in:' . User::ruleRole()],
+            'status' => ['required', 'in:' . User::ruleStatus()]
+        ]);
+
+        if ($request->has('password') && $request->filled('password'))
+        {
+            $request->validate([
+                'password' => ['required', Password::min(3)],
+            ]);
+
+            $data['password'] = $request->input('password');
+        }
+
+        $user->update($data);
+
+        return redirect()->route('users.index')
+        ->with('type', 'success')
+        ->with('message', 'Rekod Berjaya dikemaskini!');
     }
 
     /**
@@ -100,6 +130,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        return redirect()->route('users.index');
+        $this->authorize('delete', $user);
+
+        $user->delete();
+
+        return redirect()->route('users.index')
+        ->with('type', 'success')
+        ->with('message', 'Rekod Berjaya dipadam!');
     }
 }

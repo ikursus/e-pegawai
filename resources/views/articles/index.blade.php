@@ -40,16 +40,22 @@
                 <a href="{{ route('articles.show', $article->id) }}" class="btn btn-primary">
                     View
                 </a>
-                <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-info">
-                    Edit
-                </a>
-                <form method="POST" action="{{ route('articles.destroy', $article->id) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">
-                        Delete
-                    </button>
-                </form>
+
+                @can('update', $article)
+                    <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-info">
+                        Edit
+                    </a>
+                @endcan
+
+                @can('delete', $article)
+                    <form method="POST" action="{{ route('articles.destroy', $article->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">
+                            Delete
+                        </button>
+                    </form>
+                @endcan
             </td>
         </tr>
 

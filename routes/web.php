@@ -28,7 +28,8 @@ Route::middleware('auth')->group(function() {
 
 
     // Bahagian pengurusan / admin
-    Route::resource('users', UserController::class)->middleware('check.admin');
+    // Route::resource('users', UserController::class)->middleware('check.admin');
+    Route::resource('users', UserController::class);
 
 
 });

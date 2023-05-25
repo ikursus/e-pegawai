@@ -5,7 +5,9 @@
 
 <x-alert :type="$type" :message="$message" />
 
-<a href="{{ route('users.create') }}" class="btn btn-primary mt-2">Tambah User</a>
+@can('create')
+<a href="{{ route('users.create') }}" class="btn btn-primary mt-2">Tambah Profil Pengguna</a>
+@endcan
 
 <hr>
 
@@ -29,9 +31,25 @@
             <td>{{ $user->no_pekerja }}</td>
             <td>{{ $user->status }}</td>
             <td>
-                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info">
-                    Edit
+                <a href="{{ route('users.show', $user->id) }}" class="btn btn-primary">
+                    View
                 </a>
+
+                @can('update', $user)
+                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info">
+                        Edit
+                    </a>
+                @endcan
+
+                @can('delete', $user)
+                    <form method="POST" action="{{ route('users.destroy', $user->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">
+                            Delete
+                        </button>
+                    </form>
+                @endcan
             </td>
         </tr>
 
