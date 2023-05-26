@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserTrashController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ArticleTrashController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PhotoController;
 
 // Route pelawat
@@ -48,6 +49,11 @@ Route::middleware('auth')->group(function() {
 
     // Route demo dapatkan photo dari API https://jsonplaceholder.typicode.com/
     Route::get('photos', [PhotoController::class, 'index'])->name('photos.index');
+
+    // Chatting Route
+    Route::get('chat', [ChatController::class, 'index'])->name('chat.index');
+    Route::post('chat/send', [ChatController::class, 'send'])->name('chat.send');
+    Route::post('chat/receive', [ChatController::class, 'receive'])->name('chat.receive');
 
 });
 

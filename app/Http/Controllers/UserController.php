@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PenggunaTelahMendaftar;
 use App\Models\User;
 use App\Mail\NotisAkaunBaru;
 use Illuminate\Http\Request;
@@ -81,10 +82,17 @@ class UserController extends Controller
         $user = User::create($data);
 
         // Hantar email notis akaun baru kepada user baru tersebut
-        Mail::to($request->user())->send(new NotisAkaunBaru($user));
+        // Mail::to($request->user())->send(new NotisAkaunBaru($user));
 
         // Hantar notification kepada user baru tersebut
-        $user->notify(new NotificationsNotisAkaunBaru($user));
+        // $user->notify(new NotificationsNotisAkaunBaru($user));
+
+        // Hantar maklumat $user kepada Event & Listener berkaitan
+        // Cara 1
+        // PenggunaTelahMendaftar::dispatch($user);
+        // Cara 2
+        event(new PenggunaTelahMendaftar($user));
+
 
         // Final response. redirect ke senarai users
         return redirect()->route('users.index')
