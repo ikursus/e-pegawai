@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ChatBroadcast;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
@@ -13,15 +14,21 @@ class ChatController extends Controller
     }
 
     // Hantar mesej chat ke pusher
-    public function send()
+    public function send(Request $request)
     {
+        $message = $request->input('message');
 
+        broadcast(new ChatBroadcast($message))->toOthers();
+
+        return view('chat.send', compact('message'));
     }
 
 
     // Terima response daripada pusher
-    public function receive()
+    public function receive(Request $request)
     {
+        $message = $request->input('message');
 
+        return view('chat.receive', compact('message'));
     }
 }
