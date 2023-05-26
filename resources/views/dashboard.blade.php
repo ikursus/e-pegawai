@@ -30,6 +30,12 @@ Konten Component Card
 
 <hr>
 
+<div class="alert alert-warning">
+    {{ $contohSession }}
+</div>
+
+<hr>
+
 <p>
     Ada
     <span class="text-danger fw-bolder fs-3">
@@ -69,4 +75,22 @@ Konten Component Card
         @endforelse
     </tbody>
 </table>
+
+<hr>
+
+<ul>
+    @foreach ($senaraiUsersArray as $user)
+    <li>{{ $user['id'] }} | {{ $user['nama'] }} | {{ $user['email'] }}</li>
+    @endforeach
+</ul>
+
+<hr>
+
+<ul>
+    @foreach ($senaraiUsersCollection->pluck('email') as $email)
+    <li>{{ $email }}</li>
+    @endforeach
+</ul>
+
+
 @endsection

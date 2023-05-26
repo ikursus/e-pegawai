@@ -20,7 +20,6 @@
                     <div class="alert alert-info mb-3">
                         <div class="messages">
                             @include('chat.receive', ['message' => 'Assalamualaikum sahabat'])
-                            @include('chat.receive', ['message' => 'Ada baik ka?'])
                         </div>
                     </div>
 
@@ -75,7 +74,7 @@
             $(document).scrollTop((document).height());
         });
 
-        alert(JSON.stringify(data));
+        //alert(JSON.stringify(data));
     });
 
     // Hantar mesej kepada route send supaya dibroadcast ke pusher
