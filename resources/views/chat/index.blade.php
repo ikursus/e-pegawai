@@ -15,10 +15,17 @@
         <div class="row mb-3">
             <div class="col text-start">
 
-                <div class="alert alert-info mb-3">
-                    @include('chat.receive', ['message' => 'Assalamualaikum sahabat'])
-                    @include('chat.receive', ['message' => 'Ada baik ka?'])
+                <div class="chat">
+
+                    <div class="alert alert-info mb-3">
+                        <div class="messages">
+                            @include('chat.receive', ['message' => 'Assalamualaikum sahabat'])
+                            @include('chat.receive', ['message' => 'Ada baik ka?'])
+                        </div>
+                    </div>
+
                 </div>
+
 
             </div>
         </div>
@@ -63,7 +70,7 @@
         })
         .done(function(respon) {
             // Append mesej yang diterima dari mesej sebelumnya
-            $(".message > .message").last().after(respon);
+            $(".messages > .message").last().after(respon);
             // Scroll content selepas send supaya mesej yang terkumpul boleh dibaca
             $(document).scrollTop((document).height());
         });
@@ -89,9 +96,9 @@
             }
         }).done(function( respon ) {
             // Append mesej yang diterima dari mesej sebelumnya
-            $(".message > .message").last().after(respon);
+            $(".messages > .message").last().after(respon);
             // Clearkan input message selepas send
-            $("form #message").val();
+            $("form #message").val('');
             // Scroll content selepas send supaya mesej yang terkumpul boleh dibaca
             $(document).scrollTop((document).height());
         });
